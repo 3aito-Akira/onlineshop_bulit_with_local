@@ -6,21 +6,6 @@ function woocommerce_support()
     add_theme_support('woocommerce');
 }
 
-/*
-add_filter( 'template_include', function( $template ) {
-    $default_file = WC_Template_Loader::get_default_file();
-    
-    if ( is_null( $default_file ) ) {
-        echo "<p>\$default_file is null</p>";
-    } elseif ( $default_file === '' ) {
-        echo "<p>\$default_file is an empty string</p>";
-    } else {
-        echo "<p>default_file: $default_file</p>";
-    }
-
-    return $template;
-});
-*/
 
 function custom_woocommerce_checkout_before_customer_details() {
     $current_language = pll_current_language();
@@ -51,83 +36,11 @@ function custom_woocommerce_order_review($current_language) {
     'permalink' => $permalink));
 }
 
-/*
-function custom_woocommerce_order_review_ajax() {
-
-    echo 'custom_woocommerce_order_review_ajax was called-------------------- ' ;
-    if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-        return;
-    }
-    $current_languages = 'en'; // または適切な言語コードを設定
-    echo 'custom_woocommerce_order_review_ajax was called ' . $current_languages;
-    wc_get_template( 'checkout/review-order.php', array( 'current_languages' => $current_languages ) );
-}
-add_action( 'woocommerce_checkout_order_review', 'custom_woocommerce_order_review_ajax', 1 );
-*/
-
-
-/*
-add_action( 'woocommerce_checkout_order_review', function () {
-    echo 'woocommerce_checkout_order_review hook triggered';
-}, 10 ); 
-*/
-
-
-/*
-// グローバル変数を定義
-$current_languages = 'en'; // 例として 'en' を設定
-
-function custom_woocommerce_order_review() {
-    // グローバル変数を利用
-    global $current_languages;
-    echo 'Inside custom_woocommerce_order_review: current_languages = ' . $current_languages;
-    wc_get_template( 'checkout/review-order.php', array( 'current_languages' => $current_languages ) );
-}
-
-// WooCommerce の checkout order review フックに関数を追加
-add_action( 'woocommerce_checkout_order_review', 'custom_woocommerce_order_review', 1);
-
-// グローバル変数のデバッグ出力
-echo 'Global current_languages: ' . $current_languages;
-*/
-
-/*
-add_action('woocommerce_checkout_before_order_review', 'log_before_order_review', 0);
-function log_before_order_review() {
-    echo '<pre>Before Order Review: ' . pll_current_language() . '</pre>';
-}
-*/
-
-/*
-add_action('woocommerce_checkout_before_order_review', 'change_language_to_en_for_checkout', 1);
-function change_language_to_en_for_checkout() {
-    if ( function_exists('PLL') ) {
-        $english_language = PLL()->model->get_language('en');
-        if ($english_language) {
-            PLL()->curlang = $english_language;
-            pll_save_cache();
-            echo '<pre>Language changed to: ' . pll_current_language() . '</pre>';
-        }
-    }
-}
-*/
 
 add_action('woocommerce_checkout_after_order_review', 'log_after_order_review', 10);
 function log_after_order_review() {
     echo '<pre>After Order Review: ' . pll_current_language() . '</pre>';
 }
-/*
-function pll_save_cache() {
-    global $polylang;
-    if ( ! empty( $polylang ) ) {
-        $polylang->model->clean_languages_cache();
-        $polylang->options['cache'] = array();
-    }
-}
-*/
-
-
-
 
 add_filter( 'woocommerce_get_price_suffix', 'custom_woocommerce_price_suffix', 10, 4 );
 function custom_woocommerce_price_suffix( $suffix, $product, $price, $qty ) {
@@ -148,111 +61,190 @@ function custom_woocommerce_price_suffix( $suffix, $product, $price, $qty ) {
     return $suffix;
 }
 
-/*
-global $wp_filter;
-var_dump( $wp_filter['woocommerce_checkout_order_review'] );
-
-add_action( 'wp_footer', 'debug_woocommerce_hooks' );
-function debug_woocommerce_hooks() {
-    global $wp_filter;
-    if ( isset( $wp_filter['woocommerce_checkout_order_review'] ) ) {
-        echo '<pre>';
-        var_dump( $wp_filter['woocommerce_checkout_order_review'] );
-        echo '</pre>';
-    } else {
-        echo 'woocommerce_checkout_order_review hook not found.';
-    }
-}
-*/
-/*
-add_action('woocommerce_checkout_order_review', 'debug_current_language_checkout');
-function debug_current_language_checkout() {
-    if (function_exists('pll_current_language')) {
-        $current_language = pll_current_language();
-        echo('Current language in checkout order review: ' . $current_language);
-    }
-}
-*/
-
-/*
-add_action('wp_footer', 'add_language_change_script');
-function add_language_change_script() {
+//管理画面の左側にメニューを作る
+add_action('admin_menu', function(){
+    add_menu_page('カスタムメニュー', 'カスタムメニュー','manage_options', 'my_exam_settings',
+    function(){
     ?>
-    <script type="text/javascript">
-        jQuery(document).ajaxComplete(function() {
-            <?php if ( function_exists('PLL') ) : ?>
-                PLL()->curlang = PLL()->model->get_language('en');
-            <?php endif; ?>
-        });
-    </script>
+    <div class="wrap">
+        <h2>サンプル設定</h2>
+    </div>
     <?php
-}
-*/
+},'dashicons-admin-generic');
+});
 
-/*
-add_action('all', 'log_specific_hooks');
-function log_specific_hooks($hook_name) {
-    $hooks_to_log = array(
-        'woocommerce_checkout_order_review',
-        'woocommerce_locate_template',
-        'pll_language_defined',
-        'pll_after_language_switch'
-        // 他にログに記録したいフックを追加
+//特定のユーザーに権限を付与する
+function add_publish_posts_capability_to_user() {
+    $user = get_user_by('login', 'akiya'); // 'username' はユーザー名
+    $user_id = $user->ID;
+    
+    // ユーザーIDを指定してユーザーオブジェクトを取得
+    $user = new WP_User( $user_id ); // $user_id にユーザーIDを指定
+    
+    // 'publish_posts' 権限を追加
+    if($user) {
+        $user->add_cap('publish_posts');
+    }
+}
+add_action('init', 'add_publish_posts_capability_to_user');
+
+// 設定の初期化
+function myplugin_settings_init() {
+    // 設定オプションの登録（グループ名とオプション名）
+    register_setting('myplugin_options_group', 'myplugin_option_name');
+
+    // セクションの追加
+    add_settings_section(
+        'myplugin_section', // セクションID
+        'セクションタイトル', // セクションタイトル
+        'myplugin_section_callback', // セクションの説明コールバック
+        'myplugin' // ページID
     );
 
-    if (in_array($hook_name, $hooks_to_log)) {
-        echo ('Hook fired: ' . $hook_name);
-    }
+    // 設定フィールドの追加
+    add_settings_field(
+        'myplugin_field', // フィールドID
+        'フィールド名', // フィールドタイトル
+        'myplugin_field_callback', // フィールド出力のコールバック
+        'myplugin', // ページID
+        'myplugin_section' // セクションID
+    );
 }
-*/
+add_action('admin_init', 'myplugin_settings_init');
 
-/*
-add_filter( 'woocommerce_locate_template', 'debug_woocommerce_locate_template', 10, 3 );
-
-function debug_woocommerce_locate_template( $template, $template_name, $template_path ) {
-    echo( 'Template being loaded: ' . $template );
-    echo( 'Template name: ' . $template_name );
-    echo( 'Template path: ' . $template_path );
-
-    // デバッグ用にフィルターを通過するテンプレートをそのまま返す
-    return $template;
+// セクションの説明コールバック
+function myplugin_section_callback() {
+    echo '<p>このセクションの説明です。</p>';
 }
-*/
-/*
-function enqueue_custom_script() {
-    if (is_page() || is_single()) {  // 任意の条件に基づいてスクリプトを読み込む
-        wp_enqueue_script('element-order', get_template_directory_uri() . '/js/element-order.js', array('jquery'), null, true);
-    }
+
+// フィールド出力のコールバック
+function myplugin_field_callback() {
+    // 現在のオプション値を取得
+    $option = get_option('myplugin_option_name');
+    // フィールドを出力
+    echo "<input type='text' name='myplugin_option_name' value='" . esc_attr($option) . "' />";
 }
-add_action('wp_enqueue_scripts', 'enqueue_custom_script');
-*/
 
-/*
-function enqueue_custom_script() {
-    if (is_checkout()) {  // チェックアウトページに限定してスクリプトを読み込む
-        wp_enqueue_script('element-order', get_template_directory_uri() . '/js/element-order.js', array('jquery'), null, true);
-    }
+// 設定ページを追加する関数
+function myplugin_add_admin_menu() {
+    add_menu_page(
+        'My Plugin Settings', // ページタイトル
+        'My Plugin',          // メニュー名
+        'edit_posts',      //　権限
+        'myplugin',           // ページID（スラッグ）
+        'myplugin_options_page' // 表示するコールバック関数
+    );
 }
-add_action('wp_enqueue_scripts', 'enqueue_custom_script');
-*/
+add_action('admin_menu', 'myplugin_add_admin_menu');
 
-/*
-add_action('wp_footer', function() {
-    global $wp_filter;
-    if (isset($wp_filter['woocommerce_checkout_order_review'])) {
-        echo(print_r($wp_filter['woocommerce_checkout_order_review'], true));
+// 設定ページの内容を表示するコールバック関数
+function myplugin_options_page() {
+    ?>
+    <form action="options.php" method="post">
+        <?php
+        settings_fields('myplugin_options_group'); // 設定オプションのグループ
+        do_settings_sections('myplugin'); // 設定セクションとフィールドの出力
+        submit_button(); // 送信ボタン
+        ?>
+    </form>
+    <?php
+}
+/*----------------------------------*/
+
+// カスタム管理メニューを追加
+function custom_admin_menu() {
+    add_menu_page(
+        'Sample Page Editor',      // ページタイトル
+        '案内文編集',                    // メニュータイトル
+        'edit_pages',              // 権限（ページ編集が可能なユーザー）
+        'sample-page-editor',      // スラッグ
+        'sample_page_editor_callback', // コールバック関数
+        'dashicons-edit',          // アイコン
+        6                          // メニューの表示順
+    );
+}
+add_action('admin_menu', 'custom_admin_menu');
+
+// 設定ページのコールバック関数
+function sample_page_editor_callback() {
+    if (!current_user_can('edit_pages')) {
+        wp_die(__('You do not have sufficient permissions to access this page.'));
     }
-});
-*/
 
-/*
-global $wp_filter;
-echo("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-var_dump($wp_filter['woocommerce_checkout_order_review']);
-*/
+    // 編集対象の固定ページの ID を設定
+    $post_id = 2; // 編集対象の固定ページの ID に変更
+
+    // 固定ページのカスタムメタデータを取得
+    $page_content = get_post_meta($post_id, 'sample_page_content', true);
+
+    ?>
+    <div class="wrap">
+        <h1>案内文編集</h1>
+        <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+            <input type="hidden" name="action" value="save_sample_page_content">
+            <input type="hidden" name="post_id" value="<?php echo esc_attr($post_id); ?>">
+            <textarea name="sample_page_content" rows="10" cols="50"><?php echo esc_textarea($page_content); ?></textarea>
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
+}
+
+// データの保存処理
+function save_sample_page_content() {
+    if (!current_user_can('edit_pages')) {
+        wp_die(__('You do not have sufficient permissions to perform this action.'));
+    }
+
+    // フォームから送信されたデータを取得
+    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    $content = isset($_POST['sample_page_content']) ? sanitize_textarea_field($_POST['sample_page_content']) : '';
+
+    // 固定ページのメタデータを更新
+    if ($post_id) {
+        update_post_meta($post_id, 'sample_page_content', $content);
+    }
+
+    // 保存後にリダイレクト
+    wp_redirect(admin_url('admin.php?page=sample-page-editor'));
+    exit;
+}
+add_action('admin_post_save_sample_page_content', 'save_sample_page_content');
 
 
+function register_sample_page_settings() {
+    // 設定グループとオプションを登録
+    register_setting('sample_page_options_group', 'sample_page_content');
+    
+    // 設定セクションを追加
+    add_settings_section(
+        'sample_page_section', // セクションID
+        '', // セクションタイトル
+        null, // コールバック関数
+        'sample-page-editor' // ページスラッグ
+    );
 
+    // 設定フィールドを追加
+    add_settings_field(
+        'sample_page_content', // フィールドID
+        'Sample Page Content', // フィールドラベル
+        'sample_page_content_callback', // コールバック関数
+        'sample-page-editor', // ページスラッグ
+        'sample_page_section' // セクションID
+    );
+}
+add_action('admin_init', 'register_sample_page_settings');
+
+//sample-pageにどのように表示されるかを決めている
+function sample_page_content_callback() {
+
+    // 固定ページの ID を指定
+    $post_id = 2; // 編集したい固定ページの ID に変更
+    $content = get_post_meta($post_id, 'sample_page_content', true);
+    echo '<textarea name="sample_page_content" rows="10" cols="50">' . esc_textarea($content) . '</textarea>';
+}
+
+//案内文編集の表示内容と機能が設定されている
 
 
 
