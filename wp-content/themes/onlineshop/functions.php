@@ -244,9 +244,42 @@ function sample_page_content_callback() {
     echo '<textarea name="sample_page_content" rows="10" cols="50">' . esc_textarea($content) . '</textarea>';
 }
 
-//案内文編集の表示内容と機能が設定されている
+function get_shop_page_id() {
+    if ( is_page_template( 'page-shop.php' ) ) {
+        // ここでページIDを取得
+        $page_id = get_queried_object_id();
+        echo "<script>console.log('Shop Page ID: " . esc_js( $page_id ) . "');</script>";
+    }
+}
+add_action( 'wp', 'get_shop_page_id' );
 
+// WooCommerceの商品一覧の前にカスタムフィールドの情報を表示
+function display_custom_fields_on_shop_page() {
+    // WooCommerceのショップページでのみ表示する
+    if ( is_shop() ) {
+        // ShopページのIDを取得
+        $shop_page_id = wc_get_page_id('shop');
 
+        // ACFでカスタムフィールドを取得
+        $price = get_field('price', $shop_page_id);
+        $color = get_field('color', $shop_page_id);
+        $size = get_field('size', $shop_page_id);
+        $item_number = get_field('item_number', $shop_page_id);
+
+        echo '<div>ACFで作成したカスタムフィールド商品情報を以下に表示する</div>';
+        
+        // カスタムフィールドのデータが存在する場合のみ表示
+        if ( $price || $color || $size || $item_number ) {
+            echo "<div class='product-information'>";
+            echo "<p>価格: " . esc_html( $price ) . "円</p>";
+            echo "<p>色: " . esc_html( $color ) . "</p>";
+            echo "<p>商品サイズ: " . esc_html( $size ) . "</p>";
+            echo "<p>商品番号: " . esc_html( $item_number ) . "</p>";
+            echo "</div>";
+        }
+    }
+}
+add_action('woocommerce_before_main_content', 'display_custom_fields_on_shop_page', 5);
 
 
 
