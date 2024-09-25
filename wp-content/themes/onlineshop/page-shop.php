@@ -16,13 +16,12 @@ set_query_var('item_number', get_field('item_number', get_the_ID()));
 ?>
 
     <main id="main" class="site-main">
-        <div>akira::::::::::::::::::::::</div>
         <?php
         // Check if WooCommerce is active
         if ( class_exists( 'WooCommerce' ) ) {
             // Load WooCommerce product archive template
             echo '<div>Product information section loaded</div>';
-            wc_get_template_part( 'archive-product' );
+            //wc_get_template_part( 'archive-product' );
         } else {
             echo 'WooCommerce is not active.';
         }

@@ -1,5 +1,13 @@
 <?php 
 
+function my_theme_enqueue_styles() {
+    // テーマディレクトリ内の/css/style.cssを読み込む
+    wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/style.css' );
+}
+add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
+
+
+
 add_action('after_setup_theme', 'woocommerce_support');
 function woocommerce_support()
 {
@@ -44,9 +52,6 @@ function log_after_order_review() {
 
 add_filter( 'woocommerce_get_price_suffix', 'custom_woocommerce_price_suffix', 10, 4 );
 function custom_woocommerce_price_suffix( $suffix, $product, $price, $qty ) {
-    //$suffix = ' <small class="woocommerce-price-suffix"> 税込 </small>';
-    //$suffix = ' <small class="woocommerce-price-suffix"> tax included </small>';
-    //return $suffix;
 
     // Polylangを使って現在の言語を取得
     $current_language = pll_current_language();
@@ -253,10 +258,10 @@ function get_shop_page_id() {
 }
 add_action( 'wp', 'get_shop_page_id' );
 
-// WooCommerceの商品一覧の前にカスタムフィールドの情報を表示
+// WooCommerceのショップページの商品一覧の前にカスタムフィールドの情報を表示
 function display_custom_fields_on_shop_page() {
     // WooCommerceのショップページでのみ表示する
-    if ( is_shop() ) {
+    if ( is_shop() && pll_current_language() === 'ja') {
         // ShopページのIDを取得
         $shop_page_id = wc_get_page_id('shop');
 
@@ -280,6 +285,81 @@ function display_custom_fields_on_shop_page() {
     }
 }
 add_action('woocommerce_before_main_content', 'display_custom_fields_on_shop_page', 5);
+
+// WooCommerceの商品一覧の前にカスタムフィールドの情報を表示
+function display_custom_fields_on_shop_page_en() {
+    if ( is_shop() && pll_current_language() === 'en' ) {
+         // ShopページのIDを取得
+        $shop_page_id = wc_get_page_id('shop');
+        echo "<div>" . esc_html( $shop_page_id ) . "</div>";
+
+        // ACFでカスタムフィールドを取得
+        $product_name = get_field('product_name', $shop_page_id);
+        $price = get_field('price', $shop_page_id);
+        $color = get_field('color', $shop_page_id);
+        $size = get_field('size', $shop_page_id);
+        $item_number = get_field('item_number', $shop_page_id);
+
+        echo '<div>ACFで作成したカスタムフィールド商品情報を以下に表示する en</div>';
+        
+        // カスタムフィールドのデータが存在する場合のみ表示
+        if ( $product_name || $price || $color || $size || $item_number ) {
+            echo "<div class='product-information'>";
+            echo "<p>product name: " . esc_html( $product_name ) . "</p>";
+            echo "<p>price: " . esc_html( $price ) . "USD</p>";
+            echo "<p>color: " . esc_html( $color ) . "</p>";
+            echo "<p>size: " . esc_html( $size ) . "</p>";
+            echo "<p>product number: " . esc_html( $item_number ) . "</p>";
+            echo "</div>";
+        }
+        echo "<div>Shop Page ID: " . esc_html( $shop_page_id ) . "</div>";
+    } else {
+        echo "<div>Not a shop page or not English.</div>";
+    }
+}
+
+add_action('woocommerce_before_main_content', 'display_custom_fields_on_shop_page_en', 5);
+
+//ショップページの外見や表示を変更する
+// 商品ループの後に <div>akira</div> を追加
+add_action( 'woocommerce_after_shop_loop', 'add_custom_div_after_shop_loop', 15 );
+function add_custom_div_after_shop_loop() {
+    echo '<div class="akira-text">fucntions.phpからarchive-product.phpに加えたakira</div>';
+}
+
+//woocommerce_template_loop_product_titleのオーバーライド
+if ( ! function_exists( 'woocommerce_template_loop_product_title' ) ) {
+
+	/**
+	 * Show the product title in the product loop. By default this is an H2.
+	 */
+	function woocommerce_template_loop_product_title() {
+		echo '<h2 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<h2 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<h3 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">akiraが付け足した部分があります</h3>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	}
+}
+
+//「おすすめ品」のバッジを表示するためのコード
+add_action('woocommerce_before_shop_loop_item_title', 'add_featured_badge', 10);
+function add_featured_badge() {
+    global $product;
+    if ($product->is_featured()) {
+        echo '<span class="featured-badge">おすすめ商品</span>';
+        echo '<img src="' . get_template_directory_uri() . '/okinawa-blue.jpg" alt="おすすめ商品">';
+
+    }
+}
+
+function custom_scroll_script() {
+    wp_enqueue_script('custom-scroll', get_template_directory_uri() . '/js/custom-scroll.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'custom_scroll_script');
+
+
+
+
 
 
 
