@@ -24,29 +24,43 @@ if ( $related_products ) : ?>
 	<section class="related products">
 
 		<?php
-		$heading = apply_filters( 'woocommerce_product_related_products_heading', __( 'Related products', 'woocommerce' ) );
+		//$heading = apply_filters( 'woocommerce_product_related_products_heading', __( 'Related products', 'woocommerce' ) );
+
+		$heading = apply_filters( 'woocommerce_product_related_products_heading', __( 'Other products', 'onlineshop' ) );
 
 		if ( $heading ) :
 			?>
 			<h2><?php echo esc_html( $heading ); ?></h2>
 		<?php endif; ?>
-		
-		<?php woocommerce_product_loop_start(); ?>
 
-			<?php foreach ( $related_products as $related_product ) : ?>
+		<?php
+		$args = array(
+			'post_type' => 'product',
+			'posts_per_page' => 4, // 表示する商品の数
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'slug',
+					'terms'    => 'recommended', // おすすめ商品カテゴリーのスラッグ
+				),
+			),
+		);
 
-					<?php
-					$post_object = get_post( $related_product->get_id() );
+		$recommended_products = new WP_Query( $args );
 
-					setup_postdata( $GLOBALS['post'] =& $post_object ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, Squiz.PHP.DisallowMultipleAssignments.Found
-
-					wc_get_template_part( 'content', 'product' );
-					?>
-
-			<?php endforeach; ?>
-
-		<?php woocommerce_product_loop_end(); ?>
-
+		// おすすめ商品を表示
+		if ( $recommended_products->have_posts() ) {
+			woocommerce_product_loop_start();
+			
+			while ( $recommended_products->have_posts() ) {
+				$recommended_products->the_post();
+				
+				wc_get_template_part( 'content', 'product' );
+			}
+			
+			woocommerce_product_loop_end();
+		}
+		?>
 	</section>
 	<?php
 endif;

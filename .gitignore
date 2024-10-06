@@ -28,3 +28,6 @@ node_modules/
 *.log
 *.sql
 *.sqlite
+
+.DS_store
+wp-content/themes/lightning/

@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-echo '<p>result-count.php</p>';
+
 ?>
 <p class="woocommerce-result-count">
 	<?php
@@ -30,7 +30,9 @@ echo '<p>result-count.php</p>';
 		_e( 'Showing the single result', 'woocommerce' );
 	} elseif ( $total <= $per_page || -1 === $per_page ) {
 		/* translators: %d: total results */
+		/*
 		printf( _n( 'Showing all %d result', 'Showing all %d results', $total, 'woocommerce' ), $total );
+		*/
 	} else {
 		$first = ( $per_page * $current ) - $per_page + 1;
 		$last  = min( $total, $per_page * $current );

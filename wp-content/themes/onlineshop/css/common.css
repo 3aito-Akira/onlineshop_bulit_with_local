@@ -43,6 +43,10 @@ img{
 	background: var(--black);
 	color: var(--white);
 }
+.header-white{
+	background: var(--white);
+	color: var(--black);
+}
 .header_wrap{
 	display: flex;
 	align-items: center;
@@ -89,6 +93,19 @@ img{
 	font-size: 12px;
 	text-align: center;
 }
+.header_wrap .gnav_sub-cart .count-white{
+	position: absolute;
+	bottom: 5px;
+	right: 0;
+	display: inline-block;
+	background: var(--black);
+	color: var(--white);
+	width: 21px;
+	line-height: 21px;
+	border-radius: 50%;
+	font-size: 12px;
+	text-align: center;
+}
 .header_wrap .gnav_sub-cart svg{
 	width: 30px;
 	height: 30px;
@@ -100,11 +117,17 @@ img{
 	height: 25px;
 	fill: var(--white);
 }
+.header_wrap .gnav_sub-member-black svg{
+	width: 25px;
+	height: 25px;
+	fill: var(--black);
+}
 
 .header_wrap .gnav_sub-lang{
 	position: relative;
 	margin: 0 20px 0 30px;
 }
+
 .header_wrap .gnav_sub-lang div{
 	cursor: pointer;
 	line-height: 44px;
@@ -132,6 +155,7 @@ img{
 	transform: translateY(-50%);
 	left: 20px;
 }
+
 .header_wrap .gnav_sub-lang ul {
 	position: absolute;
 	top: 54px;
@@ -155,10 +179,77 @@ img{
 	opacity: 1;
 }
 
+
+.header_wrap .gnav_sub-lang-black{
+	position: relative;
+	margin: 0 20px 0 30px;
+}
+
+.header_wrap .gnav_sub-lang-black div{
+	cursor: pointer;
+	line-height: 44px;
+	padding: 0 45px;
+	border-radius: 100px;
+	border: 1px solid var(--black);
+}
+.header_wrap .gnav_sub-lang-black::before{
+	position: absolute;
+	content: '';
+	width: 6px;
+	height: 6px;
+	border-right: 1px solid var(--black);
+	border-bottom: 1px solid var(--black);
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%) rotate(45deg);
+}
+.header_wrap .gnav_sub-lang-black svg{
+	width: 20px;
+	height: 20px;
+	fill: var(--black);
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 20px;
+}
+
+.header_wrap .gnav_sub-lang-black ul {
+	position: absolute;
+	top: 54px;
+	left: 0;
+	width: 100%;
+	border-radius: 4px;
+	background: #f2f2f2;
+	color: var(--black);
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease, opacity 0.3s ease;
+	z-index: 10;
+}
+.header_wrap .gnav_sub-lang-black ul li a{
+	display: block;
+	padding: 10px 15px;
+}
+.header_wrap .gnav_sub-lang-black ul.active {
+	max-height: 200px;
+	opacity: 1;
+}
+
 .header_wrap .gnav_sub-contact{
 	line-height: 44px;
 	background: var(--white);
 	color: var(--black);
+	text-align: center;
+	padding: 0 30px;
+	border-radius: 100px;
+	display: block;
+}
+
+.header_wrap .gnav_sub-contact-black{
+	line-height: 44px;
+	background: var(--black);
+	color: var(--white);
 	text-align: center;
 	padding: 0 30px;
 	border-radius: 100px;

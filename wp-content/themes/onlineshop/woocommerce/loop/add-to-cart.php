@@ -21,16 +21,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $product;
 
+$image_url = get_template_directory_uri() . '/img/common/arrow-white.png';
+
 echo apply_filters(
+
 	'woocommerce_loop_add_to_cart_link', // WPCS: XSS ok.
 	sprintf(
-		'<a href="%s" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_%s" data-quantity="%s" class="%s" %s>%s</a>',
+
+		'<div class="right-align">
+			<a href="%s" aria-describedby="woocommerce_loop_add_to_cart_link_describedby_%s" data-quantity="%s" class="%s" %s>
+				<img src="%s" alt="">
+			</a>
+		</div>',
 		esc_url( $product->add_to_cart_url() ),
 		esc_attr( $product->get_id() ),
 		esc_attr( isset( $args['quantity'] ) ? $args['quantity'] : 1 ),
 		esc_attr( isset( $args['class'] ) ? $args['class'] : 'button' ),
 		isset( $args['attributes'] ) ? wc_implode_html_attributes( $args['attributes'] ) : '',
-		esc_html( $product->add_to_cart_text() )
+		/*esc_html( $product->add_to_cart_text() ),*/
+		esc_url( $image_url ) 
 	),
 	$product,
 	$args
@@ -38,4 +47,5 @@ echo apply_filters(
 ?>
 <span id="woocommerce_loop_add_to_cart_link_describedby_<?php echo esc_attr( $product->get_id() ); ?>" class="screen-reader-text">
 	<?php echo esc_html( $args['aria-describedby_text'] ); ?>
+	<img src="<?php echo get_template_directory_uri(); ?>/img/page/fv_dummy.jpg" alt="">
 </span>

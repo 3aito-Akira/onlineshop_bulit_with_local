@@ -257,105 +257,81 @@ function get_shop_page_id() {
     }
 }
 add_action( 'wp', 'get_shop_page_id' );
-
-// WooCommerceのショップページの商品一覧の前にカスタムフィールドの情報を表示
-function display_custom_fields_on_shop_page() {
-    // WooCommerceのショップページでのみ表示する
-    if ( is_shop() && pll_current_language() === 'ja') {
-        // ShopページのIDを取得
-        $shop_page_id = wc_get_page_id('shop');
-
-        // ACFでカスタムフィールドを取得
-        $price = get_field('price', $shop_page_id);
-        $color = get_field('color', $shop_page_id);
-        $size = get_field('size', $shop_page_id);
-        $item_number = get_field('item_number', $shop_page_id);
-
-        echo '<div>ACFで作成したカスタムフィールド商品情報を以下に表示する</div>';
+function custom_shop_page_title_and_toggleButton() {
+    if (is_shop()) {  // ショップページのみ適用
+        echo '<h1 class="shop-page-title">Store</h1>';
         
-        // カスタムフィールドのデータが存在する場合のみ表示
-        if ( $price || $color || $size || $item_number ) {
-            echo "<div class='product-information'>";
-            echo "<p>価格: " . esc_html( $price ) . "円</p>";
-            echo "<p>色: " . esc_html( $color ) . "</p>";
-            echo "<p>商品サイズ: " . esc_html( $size ) . "</p>";
-            echo "<p>商品番号: " . esc_html( $item_number ) . "</p>";
-            echo "</div>";
-        }
+        echo '
+            <div class="switch-button-section">
+                <div class="switch-button-container">
+                    <div id="category-filter" class="switch-button">
+                        <button class="switch-button-case left active-case">All</button>
+                        <button class="switch-button-case center ">Plugins</button>
+                        <button class="switch-button-case right">Colors</button>
+                    </div>
+                </div>
+            </div>';
     }
 }
-add_action('woocommerce_before_main_content', 'display_custom_fields_on_shop_page', 5);
+add_action('woocommerce_before_main_content', 'custom_shop_page_title_and_toggleButton', 10);
 
-// WooCommerceの商品一覧の前にカスタムフィールドの情報を表示
-function display_custom_fields_on_shop_page_en() {
-    if ( is_shop() && pll_current_language() === 'en' ) {
-         // ShopページのIDを取得
-        $shop_page_id = wc_get_page_id('shop');
-        echo "<div>" . esc_html( $shop_page_id ) . "</div>";
+/*
+add_action( 'woocommerce_before_shop_loop', 'remove_woocommerce_before_shop_loop_functions', 1 );
 
-        // ACFでカスタムフィールドを取得
-        $product_name = get_field('product_name', $shop_page_id);
-        $price = get_field('price', $shop_page_id);
-        $color = get_field('color', $shop_page_id);
-        $size = get_field('size', $shop_page_id);
-        $item_number = get_field('item_number', $shop_page_id);
-
-        echo '<div>ACFで作成したカスタムフィールド商品情報を以下に表示する en</div>';
-        
-        // カスタムフィールドのデータが存在する場合のみ表示
-        if ( $product_name || $price || $color || $size || $item_number ) {
-            echo "<div class='product-information'>";
-            echo "<p>product name: " . esc_html( $product_name ) . "</p>";
-            echo "<p>price: " . esc_html( $price ) . "USD</p>";
-            echo "<p>color: " . esc_html( $color ) . "</p>";
-            echo "<p>size: " . esc_html( $size ) . "</p>";
-            echo "<p>product number: " . esc_html( $item_number ) . "</p>";
-            echo "</div>";
-        }
-        echo "<div>Shop Page ID: " . esc_html( $shop_page_id ) . "</div>";
-    } else {
-        echo "<div>Not a shop page or not English.</div>";
-    }
+function remove_woocommerce_before_shop_loop_functions() {
+    remove_all_actions( 'woocommerce_before_shop_loop' );
 }
+    */
+    //remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+    remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+    
 
-add_action('woocommerce_before_main_content', 'display_custom_fields_on_shop_page_en', 5);
 
-//ショップページの外見や表示を変更する
-// 商品ループの後に <div>akira</div> を追加
-add_action( 'woocommerce_after_shop_loop', 'add_custom_div_after_shop_loop', 15 );
-function add_custom_div_after_shop_loop() {
-    echo '<div class="akira-text">fucntions.phpからarchive-product.phpに加えたakira</div>';
-}
 
 //woocommerce_template_loop_product_titleのオーバーライド
 if ( ! function_exists( 'woocommerce_template_loop_product_title' ) ) {
-
-	/**
-	 * Show the product title in the product loop. By default this is an H2.
-	 */
 	function woocommerce_template_loop_product_title() {
 		echo '<h2 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo '<h2 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h2>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo '<h3 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">akiraが付け足した部分があります</h3>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
 	}
-}
-
-//「おすすめ品」のバッジを表示するためのコード
-add_action('woocommerce_before_shop_loop_item_title', 'add_featured_badge', 10);
-function add_featured_badge() {
-    global $product;
-    if ($product->is_featured()) {
-        echo '<span class="featured-badge">おすすめ商品</span>';
-        echo '<img src="' . get_template_directory_uri() . '/okinawa-blue.jpg" alt="おすすめ商品">';
-
-    }
 }
 
 function custom_scroll_script() {
     wp_enqueue_script('custom-scroll', get_template_directory_uri() . '/js/custom-scroll.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'custom_scroll_script');
+
+// 商品一覧の表示件数を8件に設定
+function custom_woocommerce_product_per_page( $query ) {
+    if ( is_shop() || is_product_category() || is_product_tag() ) {
+        $query->set( 'posts_per_page', 8 );
+    }
+}
+add_action( 'pre_get_posts', 'custom_woocommerce_product_per_page' );
+
+// 1行に表示する商品の列数を4つに設定
+add_filter( 'loop_shop_columns', 'custom_loop_shop_columns', 999 );
+function custom_loop_shop_columns() {
+    return 4;
+}
+
+// ページネーションを表示
+add_action( 'woocommerce_after_shop_loop', 'woocommerce_pagination', 10 );
+
+
+//pluginsページ
+
+
+
+/*
+各商品ページ
+------------------*/
+//関連商品をカスタマイズするための翻訳ファイル作成
+function my_theme_setup() {
+    load_theme_textdomain( 'onlineshop', get_template_directory() . '/languages' );
+}
+add_action( 'after_setup_theme', 'my_theme_setup' );
+
+
 
 
 

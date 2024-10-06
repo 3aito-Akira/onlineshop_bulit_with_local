@@ -24,9 +24,9 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 	return;
 }
 ?>
+
 <li <?php wc_product_class( '', $product ); ?>>
 	<?php
-	echo '<p>content-product.php was called.</p>';
 	/**
 	 * Hook: woocommerce_before_shop_loop_item.
 	 *

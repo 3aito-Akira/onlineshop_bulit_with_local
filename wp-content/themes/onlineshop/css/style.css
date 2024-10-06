@@ -1,5 +1,214 @@
 /* CSSファイル側 */
 .akira-text {
     color: red;
-    font-size: 20px; /* 必要に応じて他のスタイルを追加できます */
+    font-size: 20px; 
 }
+
+
+/*
+shopページのtitle
+
+    --------------------*/
+.shop-page-title {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: calc(5% + 20px);
+    font-size: 100px;
+    margin-top: 2%;
+}
+
+/*
+shopページのsliding toggle button
+
+    --------------------*/
+.switch-button-section {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 5%;
+}
+
+/* 外側のコンテナ */
+.switch-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 70px;
+    border: 2px solid #333;
+    border-radius: 35px;
+    padding: 10px;
+    margin-top: 2%;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    overflow: hidden; 
+}
+
+/* 内側のスイッチボタン（背景アニメーション用の擬似要素追加） */
+.switch-button {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.switch-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 33.33%; 
+    height: 100%;
+    background-color: #0d0e0d; 
+    border-radius: 30px;
+    z-index: 0; 
+    transition: transform 0.6s ease; 
+    transform: translateX(0); 
+}
+
+
+/* ボタン自体のスタイル */
+.switch-button-case {
+    position: relative;
+    z-index: 1; 
+    flex: 1;
+    border: none;
+    background-color: transparent; 
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color 0.3s ease;
+    border-radius: 30px;
+}
+
+.switch-button-case.active-case {
+    color: white; 
+}
+
+.switch-button.cursor-left::before {
+    transform: translateX(0); /* 左のボタンの場合 */
+}
+
+.switch-button.cursor-center::before {
+    transform: translateX(100%); /* 中央のボタンに合わせて移動 */
+}
+
+.switch-button.cursor-right::before {
+    transform: translateX(200%); /* 右のボタンに合わせて移動 */
+}
+
+/*
+shopページの商品一覧区画の上書き
+
+    --------------------*/
+
+.woocommerce .site-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* より具体的なセレクタ */
+
+.woocommerce ul.products {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.woocommerce ul.products li.product {
+    width: calc(25% - 20px);
+    aspect-ratio: 6 / 5; 
+    
+    margin: 0;
+    margin-bottom: 1em; 
+    border: 1px solid #E2E2E2; 
+    border-radius: 10px; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+}
+
+.right-align {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    align-self: flex-start;
+}
+
+.woocommerce-loop-product__title {
+    padding-left: 10px;
+}
+
+.woocommerce ul.products li.product .price {
+    display: none;
+}
+
+.woocommerce ul.products li.product .button {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #080101;
+    margin: 0;
+    border-radius: 20px;
+    padding: 0;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.woocommerce ul.products li.product .button a {
+    width: 100%;
+    height: auto;
+}
+
+.woocommerce ul.products li.product .button img {
+    width: 40%;
+    height: auto;
+    object-fit: contain;
+    margin: 0;
+}
+
+.woocommerce-result-count {
+    display: none;
+}
+
+.woocommerce-ordering {
+    display: none;
+}
+
+/* 商品ページの変更点
+-----------*/
+
+.related {
+    margin-top: 60px;
+}
+
+.related h2{
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+
+
+
+
+

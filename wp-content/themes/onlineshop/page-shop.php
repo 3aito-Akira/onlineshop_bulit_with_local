@@ -1,33 +1,28 @@
 <?php
 /*
- * Template Name: Shop Page
+ * Template Name: shop
  */
+defined( 'ABSPATH' ) || exit;
 
 get_header('shop');
 ?>
 
-<?php
 
+<?php
 set_query_var('price', get_field('price', get_the_ID()));
 set_query_var('color', get_field('color', get_the_ID()));
 set_query_var('size', get_field('size', get_the_ID()));
 set_query_var('item_number', get_field('item_number', get_the_ID()));
-
 ?>
-
     <main id="main" class="site-main">
         <?php
-        // Check if WooCommerce is active
-        if ( class_exists( 'WooCommerce' ) ) {
-            // Load WooCommerce product archive template
-            echo '<div>Product information section loaded</div>';
-            //wc_get_template_part( 'archive-product' );
+        if ( file_exists( get_template_directory() . '/woocommerce/archive-product.php' ) ) {
+            include( get_template_directory() . '/woocommerce/archive-product.php' );
         } else {
-            echo 'WooCommerce is not active.';
+            wc_get_template( '/woocommerce/archive-product.php' );
         }
         ?>
     </main>
-</div>
 
 <?php
 

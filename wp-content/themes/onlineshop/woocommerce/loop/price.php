@@ -23,7 +23,5 @@ global $product;
 ?>
 
 <?php if ( $price_html = $product->get_price_html() ) : ?>
-	<div>price.php was called</div>
 	<span class="price"><?php echo $price_html; ?></span>
-	<p>experimental div</p>
 <?php endif; ?>
