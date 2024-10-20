@@ -22,17 +22,27 @@ get_header(); ?>
         }
         ?>
 
+<?php
+// 現在の投稿の ID を取得
+$post_id = get_the_ID();
 
+// 保存された「関連ページ」を取得
+$related_pages = get_post_meta($post_id, 'related_pages', true);
 
-        <?php
-        // Include the cart template from WooCommerce
-        if ( file_exists( get_template_directory() . '/woocommerce/cart/cart.php' ) ) {
-            include( get_template_directory() . '/woocommerce/cart/cart.php' );
-        } else {
-            // Fallback to WooCommerce plugin template if custom template doesn't exist
-            wc_get_template( 'cart/cart.php' );
-        }
-        ?>
+if (!empty($related_pages)): ?>
+    <div class="related-pages">
+        <h3>関連ページ</h3>
+        <ul>
+            <?php foreach ($related_pages as $page): ?>
+                <li>
+                    <a href="<?php echo esc_url($page['url']); ?>" target="_blank">
+                        <?php echo esc_html($page['label']); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 
     </main><!-- #main -->
 </div><!-- #primary -->

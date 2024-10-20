@@ -59,6 +59,8 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 			<?php do_action( 'woocommerce_login_form_end' ); ?>
 
+			<div>akira is editing woocommerce_login_form_end</div>
+
 		</form>
 
 <?php if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) ) : ?>
@@ -117,3 +119,5 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 <?php endif; ?>
 
 <?php do_action( 'woocommerce_after_customer_login_form' ); ?>
+
+<div>akira is editing form-login.php</div>

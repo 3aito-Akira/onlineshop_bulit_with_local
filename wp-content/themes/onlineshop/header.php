@@ -22,7 +22,8 @@
         echo 'id="page-fixed" '; 
     }
 
-    body_class(); 
+    //body_class();
+    body_class('woocommerce'); 
 ?>>
 
 <header class="<?php echo is_shop() || is_product() || is_product_category() ? 'header-white' : 'header'; ?>">
@@ -41,8 +42,13 @@
             </h1>
             <nav class="gnav">
                 <ul class="gnav_main">
-                    <li><a id="scroll-to-plugins" href="#">Plugins</a></li>
-                    <li><a id="scroll-to-colors" href="#">Colors</a></li>
+                    <?php echo is_front_page() ? 
+                        '<li><a id="scroll-to-plugins" href="#">Plugins</a></li>
+                        <li><a id="scroll-to-colors" href="#">Colors</a></li>' 
+                        : 
+                        '<li><a href="' . home_url('product-category/plugins') . '") >Plugins</a></li>
+                        <li><a href="' . home_url('product-category/colors') . '")>Colors</a></li>'; 
+                    ?>
                     <?php
                     $current_lang = pll_current_language();
                     if ( $current_lang === 'ja' ) : 

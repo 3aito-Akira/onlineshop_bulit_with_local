@@ -100,17 +100,61 @@ jQuery(document).ready(function($) {
       $originalShopList.addClass('your-custom-class-not-active');
 
       if ($(this).hasClass('left')) {
-          $switchButton.removeClass('cursor-center cursor-right').addClass('cursor-left'); // 左のボタン
+          $switchButton.removeClass('cursor-center cursor-right').addClass('cursor-left'); 
       } else if ($(this).hasClass('center')) {
-          $switchButton.removeClass('cursor-left cursor-right').addClass('cursor-center'); // 中央のボタン
+          $switchButton.removeClass('cursor-left cursor-right').addClass('cursor-center'); 
       } else if ($(this).hasClass('right')) {
-          $switchButton.removeClass('cursor-left cursor-center').addClass('cursor-right'); // 右のボタン
+          $switchButton.removeClass('cursor-left cursor-center').addClass('cursor-right'); 
       }
 
-      // 選択されたボタンのカテゴリを取得
-      var selectedCategory = $(this).text().toLowerCase(); // ボタンのテキストを小文字に変換してカテゴリとして利用
-      console.log('選択されたカテゴリ:', selectedCategory);
+  });
+});
 
+$(document).ready(function() {
+
+  $('.accordion_area_sub_title_div.vol1').on('click', function() {
+    var $target = $('.accordion_area_sub_div_box.vol1');
+
+    $target.slideToggle(500);
+
+    $(this).toggleClass('accordion_title_close');
+    $target.toggleClass('accordion_box_close');
+  });
+});
+
+$(document).ready(function() {
+
+  $('.accordion_area_sub_title_div.vol2').on('click', function() {
+    var $target = $('.accordion_area_sub_div_box.vol2');
+
+    $target.slideToggle(500);
+
+    $(this).toggleClass('accordion_title_close');
+    $target.toggleClass('accordion_box_close');
+  });
+});
+
+$(document).ready(function() {
+
+  $('.accordion_area_sub_title_div.vol3').on('click', function() {
+    var $target = $('.accordion_area_sub_div_box.vol3');
+
+    $target.slideToggle(500);
+
+    $(this).toggleClass('accordion_title_close');
+    $target.toggleClass('accordion_box_close');
+  });
+});
+
+$(document).ready(function() {
+
+  $('.accordion_area_sub_title_div.vol4').on('click', function() {
+    var $target = $('.accordion_area_sub_div_box.vol4');
+
+    $target.slideToggle(500);
+
+    $(this).toggleClass('accordion_title_close');
+    $target.toggleClass('accordion_box_close');
   });
 });
 

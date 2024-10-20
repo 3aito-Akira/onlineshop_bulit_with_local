@@ -30,6 +30,7 @@ $allowed_html = array(
 
 <p>
 	<?php
+	echo '<div>akira is editing dashboard</div>';
 	printf(
 		/* translators: 1: user display name 2: logout url */
 		wp_kses( __( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ), $allowed_html ),

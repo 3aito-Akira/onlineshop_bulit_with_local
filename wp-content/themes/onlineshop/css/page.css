@@ -192,6 +192,9 @@
 	width: 30%;
 	padding: 0 40px 0 0;
 }
+.fv01 .box_item .softwareIcon {
+	display: flex;
+}
 .fv01 .box_item .softwareIcon img{
 	width: 25px;
 }
@@ -731,7 +734,7 @@ single product page
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-top: 100px;
+	margin-top: 20px;
 	margin-bottom: 50px;
 }
 
@@ -747,6 +750,20 @@ single product page
 	aspect-ratio: 1/1;
 }
 
+.product-category-icons-wrapper {
+    display: flex;
+    justify-content: center;
+	margin-top: 100px;
+}
+
+
+.product-icon-image {
+    width: 2%;
+    object-fit: cover;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
 .product-intro-wrapper h1 {
 	text-align: center;
 	font-size: 60px;
@@ -758,10 +775,6 @@ single product page
     aspect-ratio: 1440 / 600;
     display: flex;
     justify-content: center;
-    background-image: url(../img/page/fv_dummy.jpg);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
     align-items: flex-end;
 }
 
@@ -916,6 +929,7 @@ single product page
 }
 
 .product-info div {
+	width: 60%;
 	font-size: 18px;
 	font-weight: 400;
 }
@@ -964,7 +978,7 @@ single product page
 	font-weight: 400;
 }
 
-.dropdown_menu_wrapper {
+.accordion_area_wrapper {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -973,15 +987,78 @@ single product page
 	background-color: #f2f2f2;
 }
 
-.dropdown_menu_wrapper h1 {
-	font-size: 40px;
-	font-weight: 600;
+.accordion_area_wrapper h1 {
+	margin-top: 40px;	
+	margin-bottom: 20px;
 }
 
-.dropdown_menu_wrapper h2 {
-	font-size: 20px;
+.accordion_area {
+	list-style: none;
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #9c8a8a;
+}
+
+.accordion_area_title {
+	position: relative;
+	cursor: pointer;
+	font-size: 1rem;
+	font-weight: 400;
+	padding: 3% 3% 3% 50px;
+	transition: all .5s ease;
+	background-color: #f3f3f3;
+}
+
+.accordion_area_sub_title_div {
+	display: flex;
+	justify-content: space-between;
+}
+
+.accordion_area_arrow_wrapper{
+	width: 2%;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.accordion_area li {
+	margin: 10px 0;
+}
+
+.accordion_area_sub_div_box{
+	border: 1px solid #ccc;
+}
+
+.accordion_box_close{
+	display: none;
+}
+
+.accordion_area_sub_div_title {
+	cursor: pointer;
+	font-size: 1rem;
+	font-weight: 400;
+	padding: 3% 3% 3% 50px;
+	background-color: #f3f3f3;
+}
+
+.accordion_area_sub_div_content {
+	width: 100%;
+	background: #f3f3f3;
+	font-size: 1rem;
 	font-weight: 400;
 }
+
+.accordion-sub-div-content {
+	display: none;
+	background: #f3f3f3;
+	margin: 0 3% 3% 3%;
+	padding: 3%;
+}
+
 
 .dropdown_menu_sub_wrapper {
 	width: 20%;
@@ -1078,3 +1155,26 @@ single product page
 .woocommerce-tabs {
 	display: none;
 }
+
+.related {
+    margin-top: 60px;
+}
+
+.related h2{
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.button .remove-description{
+    display: inline-block;
+    margin: 5px 0;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #0073aa; /* WordPressの青色 */
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+

@@ -94,15 +94,15 @@ shopページのsliding toggle button
 }
 
 .switch-button.cursor-left::before {
-    transform: translateX(0); /* 左のボタンの場合 */
+    transform: translateX(0); 
 }
 
 .switch-button.cursor-center::before {
-    transform: translateX(100%); /* 中央のボタンに合わせて移動 */
+    transform: translateX(100%); 
 }
 
 .switch-button.cursor-right::before {
-    transform: translateX(200%); /* 右のボタンに合わせて移動 */
+    transform: translateX(200%); 
 }
 
 /*
@@ -194,18 +194,6 @@ shopページの商品一覧区画の上書き
     display: none;
 }
 
-/* 商品ページの変更点
------------*/
-
-.related {
-    margin-top: 60px;
-}
-
-.related h2{
-    text-align: center;
-    font-size: 40px;
-    font-weight: 600;
-}
 
 
 
