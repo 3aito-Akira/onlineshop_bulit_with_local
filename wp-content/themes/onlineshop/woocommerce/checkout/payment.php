@@ -22,14 +22,6 @@ if ( ! wp_doing_ajax() ) {
 }
 ?>
 <div id="payment" class="woocommerce-checkout-payment">
-	<?php 
-		$current_language = pll_current_language();
-		echo('current_language '.$current_language)."<br>";
-		$current_url = get_permalink();
-		echo '$current_url: ' . $current_url. "<br>";
-		$default_language = pll_default_language();
-		echo '$default_language : ' . $default_language . "<br>";
-	?>
 	<?php if ( WC()->cart->needs_payment() ) : ?>
 		<ul class="wc_payment_methods payment_methods methods">
 			<?php
@@ -64,12 +56,6 @@ if ( ! wp_doing_ajax() ) {
 
 		<?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
 
-		<?php 
-			$current_language = pll_current_language();
-			echo('current_language '.$current_language)."<br>";
-			$current_url = get_permalink();
-			echo '$current_url: ' . $current_url. "<br>";
-		?>
 	</div>
 </div>
 <?php

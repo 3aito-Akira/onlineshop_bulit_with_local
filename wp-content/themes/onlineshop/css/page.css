@@ -1178,3 +1178,289 @@ single product page
     cursor: pointer;
 }
 
+
+/*
+---------------------------
+cart page
+*/
+
+.woocommerce-cart.woocommerce-page .content-area {
+	width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+	padding-top: 80px;
+	padding-bottom: 20px;
+}
+
+.cart-page-content-wrapper{
+	width: 100%;
+	display: flex;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 20px;
+}
+
+.cart-page-form-wrapper {
+	width: 70%;
+}
+
+.cart-page-collaterals-wrapper {
+	width: 30%;
+}
+
+.cart-page-content-wrapper .cart-page-collaterals-wrapper .cart-collaterals .cart_totals{
+	width: 100%;
+}
+
+.cart-page-h2-spacer {
+	color: white;
+}
+
+
+@media (max-width: 768px) {
+	.cart-page-content-wrapper {
+		flex-direction: column; 
+	}
+
+	.cart-page-form-wrapper  {
+		width: 100%; 
+		margin-bottom: 20px; 
+	}
+
+	.cart-page-collaterals-wrapper {
+		width: 100%; 
+		margin-bottom: 20px; 
+	}
+}
+
+/*
+---------------------------
+checkout page
+*/
+
+.woocommerce-checkout .content-area {
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+	padding-top: 80px;
+	padding-bottom: 20px;
+}
+
+.woocommerce-form-coupon-toggle {
+	display: none;
+}
+
+/*
+-----------checkout order received
+-----------*/
+
+.woocommerce-notice.woocommerce-notice--success.woocommerce-thankyou-order-received {
+	font-size: 30px;
+	font-weight: 600;
+	line-height: 45px;
+	margin-bottom: 40px;
+}
+
+.woocommerce-order-details__title {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+
+/*
+---------------my account page
+------------*/
+
+.user-registration-page.woocommerce-account .woocommerce {
+	width: 100%;
+	padding-left: 30%;
+    padding-right: 30%;
+	padding-top: 80px;
+	padding-bottom: 20px;
+}
+
+.user-registration-page.woocommerce-account .woocommerce h2 {
+	text-align: center;
+	font-size: 30px;
+	font-weight: 600;
+	color: #222222;
+}
+
+.woocommerce-form.woocommerce-form-login.login p {
+	padding-top: 30px;
+	padding-bottom: 20px;
+}
+
+.form-login-content-wrapper .woocommerce form.checkout_coupon, .woocommerce form.login, .woocommerce form.register {
+	border: 0px;
+}
+
+.woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide label{
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.woocommerce form .form-login-required {
+	color: #666666;
+	border: 1px solid #696969;
+	border-radius: 4px;
+	margin-left: 5%;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide .form-login-name-label {
+	margin-left: 5%;
+}
+
+.woocommerce-Input.woocommerce-Input--text.input-text {
+	width: 100%;
+	font-size: 16px;
+	border-bottom: 1px solid #696969;
+}
+
+.woocommerce form .show-password-input, 
+.woocommerce-page form .show-password-input {
+    top: 0;
+}
+
+.woocommerce form .form-row.form-login-form-row {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 30px;
+}
+
+.woocommerce form .form-row::after, 
+.woocommerce form .form-row::before, 
+.woocommerce-page form .form-row::after, 
+.woocommerce-page form .form-row::before, 
+.form-login-form-row::before {
+    content: "";
+    display: none; 
+    width: 0; 
+}
+
+
+.woocommerce .woocommerce-form-login .woocommerce-form-login__submit {
+	float: none;
+	margin-right: 0;
+	width: 25%;
+	height: 60px;
+	background-color: #222222;
+	color: white;
+	font-size: 16px;
+	font-weight: 400;
+	text-align: center;
+	border-radius: 10px;
+}
+
+.woocommerce-form__label.woocommerce-form__label-for-checkbox.woocommerce-form-login__rememberme {
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.woocommerce-LostPassword.lost_password {
+	text-align: center;
+}
+
+.woocommerce-LostPassword.lost_password a{
+	border-bottom: 1px solid #696969;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide.form-login-redirect-register {
+	display: flex;
+	justify-content: center;
+}
+
+.woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide.form-login-redirect-register a{
+	width: 40%;
+	font-size: 16px;
+	line-height: 32px;
+	font-weight: 400;
+	color: white;
+	background-color: #898989;
+	text-align: center;
+	border-radius: 10px;
+}
+
+/*
+------------------registration-page
+-----------------*/
+
+.page-registration-content-wrapper {
+	width: 100%;
+	padding-left: 30%;
+    padding-right: 30%;
+	padding-top: 80px;
+	padding-bottom: 20px;
+}
+
+
+.page-registration-content-wrapper h2{
+	margin-top: 40px;
+	text-align: center;
+	font-size: 30px;
+	font-weight: 600;
+	color: #222222;
+}
+
+.page-registration-required {
+	color: #666666;
+	border: 1px solid #696969;
+	border-radius: 4px;
+	margin-left: 5%;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.page-registration-content-wrapper .woocommerce-form-row.woocommerce-form-row--wide.form-row.form-row-wide {
+	padding-top: 30px;
+	padding-bottom: 20px;
+}
+
+
+.woocommerce-form.woocommerce-form-register.register .woocommerce-privacy-policy-text {
+	display: none;
+}
+
+.woocommerce-form-row.form-row.page-registration-submit {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 30px;
+}
+
+.woocommerce-Input.woocommerce-Input--password.input-text {
+	border-bottom: 1px solid #696969;
+}
+
+.page-registration-submit .woocommerce-Button.woocommerce-button.button {
+    margin-right: 0;
+    width: 25%;
+    height: 60px;
+    background-color: #222222;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+	border-radius: 10px;
+    text-align: center;
+}
+
+.woocommerce-form-row.form-row.page-my-account-redirect {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+}
+
+.woocommerce-form-row.form-row.page-my-account-redirect a{
+	border-bottom: 1px solid #696969;
+}
+

@@ -22,7 +22,6 @@
         echo 'id="page-fixed" '; 
     }
 
-    //body_class();
     body_class('woocommerce'); 
 ?>>
 
@@ -150,12 +149,11 @@
                         <ul>
                         <?php
                         $languages = pll_the_languages(array(
-                            'raw' => 1,  // 配列として出力
-                            'hide_if_empty' => 0, // 翻訳がない場合でも表示
+                            'raw' => 1,  
+                            'hide_if_empty' => 0, 
                         ));
 
                         foreach ($languages as $lang) {
-                            // 現在表示している言語の場合、リンクを強調表示（例: class="active" などを追加）
                             $active_class = $lang['current_lang'] ? ' class="active"' : '';
                             
                             echo '<li' . $active_class . '>';
@@ -195,12 +193,11 @@
                         <ul>
                         <?php
                         $languages = pll_the_languages(array(
-                            'raw' => 1,  // 配列として出力
-                            'hide_if_empty' => 0, // 翻訳がない場合でも表示
+                            'raw' => 1,  
+                            'hide_if_empty' => 0, 
                         ));
 
                         foreach ($languages as $lang) {
-                            // 現在表示している言語の場合、リンクを強調表示（例: class="active" などを追加）
                             $active_class = $lang['current_lang'] ? ' class="active"' : '';
                             
                             echo '<li' . $active_class . '>';

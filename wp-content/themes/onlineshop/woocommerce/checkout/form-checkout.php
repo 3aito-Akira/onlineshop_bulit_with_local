@@ -61,17 +61,12 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 	
 	<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 
-	<?php 
-		$current_language = pll_current_language();
-		echo('current_language '.$current_language). " before review-order ";
-	?>
-
 	<div id="order_review" class="woocommerce-checkout-review-order">
 		<?php 
 			$current_languages = array(
 				'language' => 'en'
 			);
-			echo('div review-order current_language '.$current_language. " ");
+			
 			do_action( 'woocommerce_checkout_order_review', $current_language );
 			//do_action( 'woocommerce_checkout_order_review' ); 
 		?>

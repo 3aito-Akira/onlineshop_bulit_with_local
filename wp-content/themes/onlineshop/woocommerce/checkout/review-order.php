@@ -17,72 +17,20 @@
 
 defined( 'ABSPATH' ) || exit;
 
-//WordPressで現在のURLから特定のパラメータ（例えば/en/部分）を取り出す
-/*
-$current_url = get_permalink();
-echo "get_permalink(): " . get_permalink();
-$parsed_url = parse_url($current_url);
-$path_parts = explode('/', $parsed_url['path']);
-$lang_code = $path_parts[1]; // 2番目の要素を取得
-*/
-/*
-$backtrace = debug_backtrace();
-$reviewed_count++;
-foreach ($backtrace as $trace) {
-    if (isset($trace['function']) && $trace['function'] === 'custom_woocommerce_order_review') {
-        echo '<pre>' . print_r($trace, true) . '</pre>';
-    }
-}
-*/
-echo ' $current_languages ' . $current_languages . ' $permalink '. $permalink.  "<br>";
+
 $default_language = pll_default_language();
 $the_permalink = get_the_permalink();
-echo '$default_language : ' . $default_language . ' $the_permalink: ' .$the_permalink. "<br>";
 $post = get_post();
-echo ($post->ID. "<br>");
+
 ?>
 
-<div>
-    <?php
-    echo '--------outside order table ' . (isset($current_languages) ? $current_languages : 'Variable not set'. "<br>");
-    ?>
-</div>
-
 <table class="shop_table woocommerce-checkout-review-order-table">
-	<?php
-		
-		echo "review言語コード: " . $lang_code. "<br>"." permalink " . $permalink. "<br>";
-
-		//$current_url = get_permalink();
-		//echo '$current_url: ' . $current_url. "<br>";
-		$parsed_url = parse_url($permalink);
-		$path_parts = explode('/', $parsed_url['path']);
-		$lang_code = $path_parts[1]; 
-
-		echo('$lang_code '.$lang_code. "<br>");	
-	?>
-
 	<thead>
 		<tr>
 			<th class="product-name">
 				<?php esc_html_e( 'Product', 'woocommerce' ); ?>
 			</th>
-			<th class="product-name">
-				<?php 
-			
-				if ( $current_language == 'en' ) {
-					echo 'tax included';
-				} else {
-					echo '税込';
-				}
-				?>
-			</th>
 			<th class="product-total"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
-			<th class="product-total"><?php if ( $current_language == 'en' ) {
-					echo 'subtotal';
-				} else {
-					echo '小計';
-				} ?></th>	
 		</tr>
 	</thead>
 	<tbody>

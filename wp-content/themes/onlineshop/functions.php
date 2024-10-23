@@ -14,11 +14,13 @@ function woocommerce_support()
     add_theme_support('woocommerce');
 }
 
-
+/*
+--------------------page-checkout.php
+*/
 function custom_woocommerce_checkout_before_customer_details() {
     $current_language = pll_current_language();
     $default_language = pll_default_language();
-    echo ('checkout_before_customer_details current: '. $current_language . " default:  ". $default_language.  "<br>");
+    //echo ('checkout_before_customer_details current: '. $current_language . " default:  ". $default_language.  "<br>");
 }
 add_action( 'woocommerce_checkout_before_customer_details', 'custom_woocommerce_checkout_before_customer_details', 10 );
 
@@ -31,14 +33,14 @@ remove_action( 'woocommerce_checkout_order_review', 'woocommerce_order_review' )
 add_action('woocommerce_checkout_order_review', 'custom_woocommerce_order_review', 10, 1);
 // 引数を受け取る関数
 function custom_woocommerce_order_review($current_language) {
-    echo ($current_language . " order_review <br>");
+    //echo ($current_language . " order_review <br>");
     global $call_count;
     
     $call_count++;
-    echo 'custom_order_review was called - Current Language: ' . $current_language . ' - Call Count: ' . $call_count. "<br>";
+    //echo 'custom_order_review was called - Current Language: ' . $current_language . ' - Call Count: ' . $call_count. "<br>";
 
     $permalink = get_permalink();
-    echo "*****get_permalink(): " . $permalink . "<br>";
+    //echo "*****get_permalink(): " . $permalink . "<br>";
 
     wc_get_template('checkout/review-order.php', array('current_languages' => $current_language,
     'permalink' => $permalink));
@@ -47,7 +49,7 @@ function custom_woocommerce_order_review($current_language) {
 
 add_action('woocommerce_checkout_after_order_review', 'log_after_order_review', 10);
 function log_after_order_review() {
-    echo '<pre>After Order Review: ' . pll_current_language() . '</pre>';
+    //echo '<pre>After Order Review: ' . pll_current_language() . '</pre>';
 }
 
 add_filter( 'woocommerce_get_price_suffix', 'custom_woocommerce_price_suffix', 10, 4 );
@@ -422,6 +424,7 @@ add_action( 'admin_enqueue_scripts', function() {
 ----------*/
 
 // 新規ユーザー登録フォームに住所フィールドを追加
+/*
 add_action( 'woocommerce_register_form', 'custom_add_billing_fields' );
 function custom_add_billing_fields() {
     ?>
@@ -445,9 +448,9 @@ function custom_add_billing_fields() {
             <!-- 他の国を追加 -->
         </select>
     </p>
-    <div>akira is editing show billing fields</div>
     <?php
 }
+    */
 
 // ユーザーが登録したときに住所情報を保存
 /*
@@ -525,13 +528,20 @@ function add_register_button_to_login_form() {
     // 現在のページからの相対URLを生成
     $registration_url = esc_url( home_url('/registration') );
     ?>
-    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide form-login-redirect-register">
         <a class="button" href="<?php echo $registration_url; ?>">
-            新規登録はこちら
+            新規登録
         </a>
     </p>
     <?php
 }
+
+function enqueue_custom_styles() {
+    // WooCommerceのCSSが全て読み込まれた後にpage.cssを読み込む
+    wp_enqueue_style('page-css', get_template_directory_uri() . '/css/page.css', array('woocommerce-general', 'woocommerce-layout', 'woocommerce-smallscreen'), null);
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_styles', 20); // 優先順位を20に設定
+
 
 
 
