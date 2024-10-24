@@ -99,8 +99,6 @@ defined( 'ABSPATH' ) || exit;
 			<td data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>"><?php wc_cart_totals_order_total_html(); ?></td>
 		</tr>
 
-		<?php do_action( 'woocommerce_cart_totals_after_order_total' ); ?>
-
 	</table>
 
 	<div class="wc-proceed-to-checkout">

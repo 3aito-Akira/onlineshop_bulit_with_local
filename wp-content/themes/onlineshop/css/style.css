@@ -105,6 +105,12 @@ shopページのsliding toggle button
     transform: translateX(200%); 
 }
 
+@media screen and (max-width: 767px){
+	.switch-button-container {
+        width: 60%;
+    }
+}
+
 /*
 shopページの商品一覧区画の上書き
 

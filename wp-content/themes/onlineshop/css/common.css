@@ -339,6 +339,10 @@ img{
 	fill: var(--white);
 }
 
+@media screen and (max-width: 767px){
+	
+}
+
 @media screen and (max-width: 1040px){
 	.header_wrap{
 		padding: 20px;
@@ -356,6 +360,9 @@ img{
 	.menubtn{
 		display: block;
 	}
+	.header-white .menubtn span{
+		background: black;
+	}
 	
 	.header_wrap .gnav_sub-lang{
 		margin: 60px 0 20px;
@@ -363,6 +370,17 @@ img{
 	}
 	.sp-gnav_shop{
 		display: flex;
+	}
+
+	.header-white .sp-gnav_sub-cart svg{
+		width: 25px;
+		height: 25px;
+		fill: var(--black);
+	}
+	.header-white .sp-gnav_sub-member svg{
+		width: 22px;
+		height: 22px;
+		fill: var(--black);
 	}
 }
 

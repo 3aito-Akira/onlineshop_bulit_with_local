@@ -47,6 +47,31 @@ function custom_woocommerce_order_review($current_language) {
 }
 
 
+/*
+　cart page -----------------------
+*/
+add_action( 'woocommerce_cart_totals_before_order_total', 'display_custom_message_before_order_total' );
+
+function display_custom_message_before_order_total() {
+    //echo '<div>akira is editing</div>';
+}
+
+add_filter( 'woocommerce_cart_totals_order_total_html', 'custom_order_total_text' );
+
+function custom_order_total_text( $total_html ) {
+    // 例として「消費税」を変更
+    //return str_replace( '消費税', '新しい税金テキスト', $total_html );
+    $new_text = esc_html__( 'click here', 'onlineshop' ); 
+    return str_replace( '消費税', $new_text, $total_html );
+}
+
+
+
+
+/*
+------------review page
+--------------*/
+
 add_action('woocommerce_checkout_after_order_review', 'log_after_order_review', 10);
 function log_after_order_review() {
     //echo '<pre>After Order Review: ' . pll_current_language() . '</pre>';
@@ -422,54 +447,6 @@ add_action( 'admin_enqueue_scripts', function() {
 /*
 -------- my-account page
 ----------*/
-
-// 新規ユーザー登録フォームに住所フィールドを追加
-/*
-add_action( 'woocommerce_register_form', 'custom_add_billing_fields' );
-function custom_add_billing_fields() {
-    ?>
-    <p class="form-row form-row-wide">
-        <label for="billing_address_1">請求先住所 <span class="required">*</span></label>
-        <input type="text" class="input-text" name="billing_address_1" id="billing_address_1" required />
-    </p>
-    <p class="form-row form-row-wide">
-        <label for="billing_city">市区町村 <span class="required">*</span></label>
-        <input type="text" class="input-text" name="billing_city" id="billing_city" required />
-    </p>
-    <p class="form-row form-row-wide">
-        <label for="billing_postcode">郵便番号 <span class="required">*</span></label>
-        <input type="text" class="input-text" name="billing_postcode" id="billing_postcode" required />
-    </p>
-    <p class="form-row form-row-wide">
-        <label for="billing_country">国 <span class="required">*</span></label>
-        <select name="billing_country" id="billing_country" required>
-            <option value="JP">日本</option>
-            <option value="US">アメリカ</option>
-            <!-- 他の国を追加 -->
-        </select>
-    </p>
-    <?php
-}
-    */
-
-// ユーザーが登録したときに住所情報を保存
-/*
-add_action( 'woocommerce_created_customer', 'custom_save_billing_fields' );
-function custom_save_billing_fields( $customer_id ) {
-    if ( isset( $_POST['billing_address_1'] ) ) {
-        update_user_meta( $customer_id, 'billing_address_1', sanitize_text_field( $_POST['billing_address_1'] ) );
-    }
-    if ( isset( $_POST['billing_city'] ) ) {
-        update_user_meta( $customer_id, 'billing_city', sanitize_text_field( $_POST['billing_city'] ) );
-    }
-    if ( isset( $_POST['billing_postcode'] ) ) {
-        update_user_meta( $customer_id, 'billing_postcode', sanitize_text_field( $_POST['billing_postcode'] ) );
-    }
-    if ( isset( $_POST['billing_country'] ) ) {
-        update_user_meta( $customer_id, 'billing_country', sanitize_text_field( $_POST['billing_country'] ) );
-    }
-}
-    */
 
 // User Registrationでカスタムフィールドを保存
 add_action( 'user_registration_after_register_user_action', 'save_user_registration_and_billing_fields', 10, 3 );

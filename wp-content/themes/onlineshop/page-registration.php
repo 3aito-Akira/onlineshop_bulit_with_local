@@ -7,7 +7,7 @@ if ( ! is_user_logged_in() ) {
 
     <div class="page-registration-content-wrapper">
 
-		<h2><?php esc_html_e( 'Register', 'woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'Create a new contact', 'onlineshop' ); ?></h2>
 
 		<form method="post" class="woocommerce-form woocommerce-form-register register" <?php do_action( 'woocommerce_register_form_tag' ); ?> >
 
@@ -45,7 +45,8 @@ if ( ! is_user_logged_in() ) {
 			</p>
 
             <p class="woocommerce-form-row form-row page-my-account-redirect">
-                既にアカウントをお持ちの方は<a href="<?php echo home_url('/my-account/'); ?>">こちら</a>
+				<?php esc_html_e( 'If you already have an account, ', 'onlineshop' ); ?>
+                <a href="<?php echo home_url('/my-account/'); ?>"><?php esc_html_e( 'click here', 'onlineshop' ); ?></a>
 			</p>
 
 			<?php do_action( 'woocommerce_register_form_end' ); ?>
