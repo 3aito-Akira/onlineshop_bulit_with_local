@@ -88,8 +88,27 @@ if ( $show_downloads ) {
 				?>
 					<tr>
 						<th scope="row"><?php echo esc_html( $total['label'] ); ?></th>
-						<td><?php echo wp_kses_post( $total['value'] ); ?></td>
+						<td>
+							<?php 
+							$total_value_temp = wp_kses_post( $total['value'] );
+
+							if ( $total['label'] === 'Total:')  {
+								$pattern = '/消費税/u';
+								$total_value = preg_replace_callback($pattern, function() {
+									
+									ob_start();
+									esc_html_e( 'consumption tax', 'onlineshop' );
+									return ob_get_clean();
+								}, $total_value_temp);
+								echo wp_kses_post( $total_value ); 
+							} else {
+								echo wp_kses_post( $total_value_temp );
+							}
+							?>
+						</td>
 					</tr>
+					<div>
+					</div>
 					<?php
 			}
 			?>

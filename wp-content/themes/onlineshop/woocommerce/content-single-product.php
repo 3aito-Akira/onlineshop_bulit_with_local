@@ -99,8 +99,17 @@ echo '</style>';
 				do_action( 'woocommerce_single_product_summary' );
 				?>
 			</div>
+			<?php 
+				$current_lang = pll_current_language(); 
+
+				if ( $current_lang === 'ja' ) { 
+					$cart_url = home_url('/cart/'); 
+				} else {
+					$cart_url = home_url('/en/cart-en/'); 
+				}
+			?>
 			<div class="product-cart-form-wrapper ">
-				<form id="product-cart-submit-form" class="cart" action="https://onlineshop.local/product/am-special-power-grade-pack-colors/" method="post" enctype="multipart/form-data">
+				<form id="product-cart-submit-form" class="cart" action="<?php echo esc_url($cart_url); ?>" method="post" enctype="multipart/form-data">
 					<div class="quantity">
 						<label class="screen-reader-text" for="quantity_66fd090b63ca7">AM SPECIAL POWER GRADE PACK Colors</label>
 						<input type="number" id="quantity_66fd090b63ca7" class="input-text qty text" name="quantity" value="1" aria-label="商品数量" size="4" min="1" max="" step="1" placeholder="" inputmode="numeric" autocomplete="off">

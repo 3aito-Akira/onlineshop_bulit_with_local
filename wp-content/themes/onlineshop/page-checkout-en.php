@@ -6,13 +6,14 @@ get_header(); ?>
     <main id="main" class="site-main" role="main">
 
         <?php
-        // Include the cart template from WooCommerce
-        if ( file_exists( get_template_directory() . '/woocommerce/checkout/form-checkout.php' ) ) {
-            include( get_template_directory() . '/woocommerce/checkout/form-checkout.php' );
+        
+        // Ensure WooCommerce functions are loaded
+        if ( class_exists( 'WooCommerce' ) ) {
+            // Display the WooCommerce Checkout form
+            echo do_shortcode('[woocommerce_checkout]');
         } else {
-            // Fallback to WooCommerce plugin template if custom template doesn't exist
-            wc_get_template( 'checkout/form-checkout.php' );
-        }
+            echo '<p>WooCommerce plugin is not activated. Please activate it to use the checkout page.</p>';
+        } 
         ?>
 
     </main><!-- #main -->

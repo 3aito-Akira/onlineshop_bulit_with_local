@@ -14,6 +14,25 @@ function woocommerce_support()
     add_theme_support('woocommerce');
 }
 
+add_action( 'woocommerce_proceed_to_checkout', 'list_proceed_to_checkout_callbacks' );
+function list_proceed_to_checkout_callbacks() {
+    global $wp_filter;
+
+    if ( isset( $wp_filter['woocommerce_proceed_to_checkout'] ) ) {
+        $callbacks = $wp_filter['woocommerce_proceed_to_checkout']->callbacks;
+
+        foreach ( $callbacks as $priority => $functions ) {
+            foreach ( $functions as $function ) {
+                $func_name = is_string( $function['function'] ) ? $function['function'] : ( is_object( $function['function'] ) ? get_class( $function['function'] ) . '::' . $function['function']->getShortName() : print_r( $function['function'], true ) );
+                error_log( 'Function: ' . $func_name );
+            }
+        }
+    }
+}
+
+
+
+
 /*
 --------------------page-checkout.php
 */
@@ -33,14 +52,12 @@ remove_action( 'woocommerce_checkout_order_review', 'woocommerce_order_review' )
 add_action('woocommerce_checkout_order_review', 'custom_woocommerce_order_review', 10, 1);
 // 引数を受け取る関数
 function custom_woocommerce_order_review($current_language) {
-    //echo ($current_language . " order_review <br>");
     global $call_count;
     
     $call_count++;
     //echo 'custom_order_review was called - Current Language: ' . $current_language . ' - Call Count: ' . $call_count. "<br>";
 
     $permalink = get_permalink();
-    //echo "*****get_permalink(): " . $permalink . "<br>";
 
     wc_get_template('checkout/review-order.php', array('current_languages' => $current_language,
     'permalink' => $permalink));
@@ -59,13 +76,70 @@ function display_custom_message_before_order_total() {
 add_filter( 'woocommerce_cart_totals_order_total_html', 'custom_order_total_text' );
 
 function custom_order_total_text( $total_html ) {
-    // 例として「消費税」を変更
-    //return str_replace( '消費税', '新しい税金テキスト', $total_html );
-    $new_text = esc_html__( 'click here', 'onlineshop' ); 
+    $new_text = esc_html__( 'consumption tax', 'onlineshop' ); 
     return str_replace( '消費税', $new_text, $total_html );
 }
 
+/*
+checkout en page------------------------
+*/
 
+add_filter( 'woocommerce_get_terms_and_conditions_checkbox_text', 'custom_terms_and_conditions_text' );
+
+function custom_terms_and_conditions_text( $text ) {
+    return 'I have read and agree to the custom terms and conditions';
+}
+
+add_filter( 'woocommerce_get_privacy_policy_text', 'custom_wc_privacy_policy_text', 10, 2 );
+
+function custom_wc_privacy_policy_text( $text, $type ) {
+    if ( $type === 'checkout' ) {
+        $custom_text = sprintf(
+            esc_html__( 'Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our %s.', 'onlineshop' ),
+            '[privacy_policy]'
+        );
+
+        $option_text = get_option( 'woocommerce_checkout_privacy_policy_text', sprintf( __( 'Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our %s.', 'woocommerce' ), '[privacy_policy]' ) );
+
+        if ( ! empty( $custom_text ) ) {
+            return $custom_text;
+        } elseif ( ! empty( $option_text ) ) {
+            return $option_text;
+        } else {
+            return sprintf( __( 'Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our %s.', 'woocommerce' ), '[privacy_policy]' );
+        }
+    }
+
+    return $text; 
+}
+
+add_filter('woocommerce_gateway_title', 'custom_gateway_title', 10, 2);
+
+function custom_gateway_title($title, $gateway_id) {
+    if ($gateway_id === 'stripe') {
+        return esc_html__('Credit Card (Stripe)', 'onlineshop');
+    }
+    return $title;
+}
+
+add_filter('woocommerce_gateway_description', 'custom_gateway_description', 10, 2);
+
+function custom_gateway_description($description, $payment_id) {
+    if ($payment_id === 'stripe') { 
+        return esc_html__('Pay by credit card via Stripe', 'onlineshop');
+    }
+    return $description; 
+}
+
+add_filter( 'woocommerce_get_order_item_totals', 'customize_order_item_totals_label', 10, 2 );
+function customize_order_item_totals_label( $totals, $order ) {
+    // "subtotal" というキーのラベルをカスタマイズ
+    if ( isset( $totals['total'] ) ) {
+        //$totals['subtotal']['label'] = 'Custom Subtotal Label';
+    }
+
+    return $totals;
+}
 
 
 /*
